@@ -27,27 +27,28 @@ const Home = () => {
     console.log(x, y);
     const newBoard = structuredClone(board);
 
-    for (const direction of directions) {
-      if (
-        board[y + direction[0]] !== undefined &&
-        board[y + direction[0]][x + direction[1]] === 3 - turnColor
-      )
-        for (let i = 1; i < 8; i++) {
-          if (board[y + direction[0] * i][x + direction[1] * i] === 3 - turnColor) {
-            continue;
-          } else if (board[y + direction[0] * i][x + direction[1] * i] === turnColor) {
-            newBoard[y][x] = turnColor;
-            setBoard(newBoard);
-            setTurnColor(3 - turnColor);
-            break;
-          } else {
-            break;
-          }
+    for (const direction of directions)
+      if (newBoard[y][x] === 0) {
+        if (
+          board[y + direction[0]] !== undefined &&
+          board[y + direction[0]][x + direction[1]] === 3 - turnColor
+        )
+          for (let i = 1; i < 8; i++) {
+            if (board[y + direction[0] * i][x + direction[1] * i] === 3 - turnColor) {
+              continue;
+            } else if (board[y + direction[0] * i][x + direction[1] * i] === turnColor) {
+              newBoard[y][x] = turnColor;
+              setBoard(newBoard);
+              setTurnColor(3 - turnColor);
+              break;
+            } else {
+              break;
+            }
 
-          // newBoard[y][x] = turnColor;
-          // setTurnColor(3 - turnColor);
-        }
-    }
+            // newBoard[y][x] = turnColor;
+            // setTurnColor(3 - turnColor);
+          }
+      }
 
     turnColor === 1 ? setTurnColor(2) : setTurnColor(1);
 
