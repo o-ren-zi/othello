@@ -1,5 +1,15 @@
 import { useState } from 'react';
 import styles from './index.module.css';
+const directions = [
+  [1, 1],
+  [1, 0],
+  [1, -1],
+  [0, -1],
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [0, 1],
+];
 
 const Home = () => {
   const [turnColor, setTurnColor] = useState(1);
@@ -7,19 +17,36 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 2, 0, 0, 0],
-    [0, 0, 0, 2, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 2, 0, 2, 2],
+    [0, 0, 0, 2, 1, 0, 2, 2],
+    [0, 0, 0, 0, 0, 0, 2, 2],
+    [0, 0, 0, 0, 0, 0, 2, 2],
+    [0, 0, 0, 0, 0, 0, 0, 1],
   ]);
   const clickHander = (x: number, y: number) => {
     console.log(x, y);
     const newBoard = structuredClone(board);
 
-    if (board[y + 1] !== undefined && board[y + 1][x] === 3 - turnColor) {
-      newBoard[y][x] = turnColor;
-      setTurnColor(3 - turnColor);
+    for (const direction of directions) {
+      if (
+        board[y + direction[0]] !== undefined &&
+        board[y + direction[0]][x + direction[1]] === 3 - turnColor
+      )
+        for (let i = 1; i < 8; i++) {
+          if (board[y + direction[0] * i][x + direction[1] * i] === 3 - turnColor) {
+            continue;
+          } else if (board[y + direction[0] * i][x + direction[1] * i] === turnColor) {
+            newBoard[y][x] = turnColor;
+            setBoard(newBoard);
+            setTurnColor(3 - turnColor);
+            break;
+          } else {
+            break;
+          }
+
+          // newBoard[y][x] = turnColor;
+          // setTurnColor(3 - turnColor);
+        }
     }
 
     turnColor === 1 ? setTurnColor(2) : setTurnColor(1);
