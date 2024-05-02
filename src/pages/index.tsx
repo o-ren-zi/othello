@@ -10,45 +10,28 @@ const directions = [
   [-1, 1],
   [0, 1],
 ];
-// function newvalue(x: number, y: number) {
-//   return x >= 0 && x < 8 && y >= 0 && y < 8;
-// }
+
 const Home = () => {
   const [turnColor, setTurnColor] = useState(1);
   const [memoly, setmemoly] = useState(0);
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 2, 0, 0, 0],
-    [0, 0, 0, 0, 2, 2, 0, 0],
-    [0, 0, 0, 1, 2, 2, 0, 0],
-    [0, 0, 0, 2, 1, 1, 2, 2],
-    [0, 0, 0, 0, 0, 0, 1, 2],
-    [0, 0, 0, 0, 0, 0, 2, 2],
-    [0, 0, 0, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 2, 0, 0, 0],
+    [0, 0, 0, 2, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
-  // function samecolor(x: number, y: number) {
-  //   return (board[y][x] = turnColor);
-  // }
-
-  // function othercolor(x: number, y: number) {
-  //   return (board[y][x] = 3 - turnColor);
-  // }
-
-  // function zerocolor(x: number, y: number) {
-  //   return (board[y][x] = 0);
-  // }
-
-  // const dx = directions[0];
-  // const dy = directions[1];
 
   const clickHander = (x: number, y: number) => {
     console.log(x, y);
     const newBoard = structuredClone(board);
-
-    for (const direction of directions)
-      if (newBoard[y][x] === 0) {
+    if (newBoard[y][x] === 0) {
+      for (const direction of directions)
         if (
-          board[y + direction[0]] !== undefined &&
+          board[y + direction[0]][x + direction[1]] !== undefined &&
           board[y + direction[0]][x + direction[1]] === 3 - turnColor
         )
           for (let i = 1; i < 8; i++) {
@@ -58,7 +41,6 @@ const Home = () => {
               newBoard[y][x] = turnColor;
               setBoard(newBoard);
               setTurnColor(3 - turnColor);
-              
 
               setmemoly(i);
               for (let a = 1; a < i; a++) {
@@ -76,7 +58,7 @@ const Home = () => {
             // newBoard[y][x] = turnColor;
             // setTurnColor(3 - turnColor);
           }
-      }
+    }
 
     turnColor === 1 ? setTurnColor(2) : setTurnColor(1);
 
