@@ -31,3 +31,19 @@
   background-color: white;
   border-radius: 100px;
 }
+
+.platestyle {
+  display: flex;
+  align-items: center;
+  width: 500px;
+  height: 400px;
+  margin: 10;
+  background-color: rgb(188 187 187);
+}
+
+.turnstyle {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  border-radius: 100px;
+}

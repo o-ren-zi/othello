@@ -24,6 +24,17 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
 
+  function Changecolor() {
+    const [turnColor, setTurnColor] = useState(1);
+
+    const changecolor = () => {
+      setTurnColor((prevturncolor) => (prevturncolor === 1 ? 2 : 1));
+    };
+    const currentClassName = `${styles.turnstyle}${turnColor === 1 ? 2 : 1}`;
+    return <div className={currentClassName} onClick={changecolor} />;
+  }
+  
+
   const clickHander = (x: number, y: number) => {
     console.log(x, y);
     const newBoard = structuredClone(board);
@@ -36,9 +47,9 @@ const Home = () => {
           for (let i = 1; i < 8; i++) {
             if (
               y + direction[0] * i < 0 ||
-              y + direction[0] * i >= 7 ||
+              y + direction[0] * i >= 8 ||
               x + direction[1] * i < 0 ||
-              x + direction[1] * i >= 7
+              x + direction[1] * i >= 8
             ) {
               break;
             }
@@ -72,6 +83,10 @@ const Home = () => {
   };
   return (
     <div className={styles.container}>
+      <div className={styles.platestyle}>
+        {Changecolor()}
+        <div className={styles.turnstyle} />
+      </div>
       <div className={styles.boardstyle}>
         {board.map((row, y) =>
           row.map((color, x) => (
