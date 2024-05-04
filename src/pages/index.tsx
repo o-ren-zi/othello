@@ -13,7 +13,6 @@ const directions = [
 
 const Home = () => {
   const [turnColor, setTurnColor] = useState(1);
-  const [memoly, setmemoly] = useState(0);
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -31,10 +30,18 @@ const Home = () => {
     if (newBoard[y][x] === 0) {
       for (const direction of directions)
         if (
-          board[y + direction[0]][x + direction[1]] !== undefined &&
+          board[y + direction[0]] !== undefined &&
           board[y + direction[0]][x + direction[1]] === 3 - turnColor
         )
           for (let i = 1; i < 8; i++) {
+            if (
+              y + direction[0] * i < 0 ||
+              y + direction[0] * i >= 7 ||
+              x + direction[1] * i < 0 ||
+              x + direction[1] * i >= 7
+            ) {
+              break;
+            }
             if (board[y + direction[0] * i][x + direction[1] * i] === 3 - turnColor) {
               continue;
             } else if (board[y + direction[0] * i][x + direction[1] * i] === turnColor) {
@@ -42,7 +49,6 @@ const Home = () => {
               setBoard(newBoard);
               setTurnColor(3 - turnColor);
 
-              setmemoly(i);
               for (let a = 1; a < i; a++) {
                 newBoard[y + direction[0] * a][x + direction[1] * a] = turnColor;
                 setBoard(newBoard);
